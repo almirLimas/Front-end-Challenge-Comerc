@@ -2,7 +2,10 @@
   <div class="flex justify-center items-center mt-40">
     <div class="container bg-white rounded-lg p-2">
       <div class="container flex justify-end mt-1 mb-1">
-        <button class="p-3 bg-green-400 rounded-lg text-white">
+        <button
+          class="p-3 bg-green-400 rounded-lg text-white"
+          @click="router.push({ path: '/registerUser' })"
+        >
           <i class="fa-solid fa-user-plus mr-4"></i> Novo usuário
         </button>
       </div>

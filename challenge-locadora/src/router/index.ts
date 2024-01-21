@@ -44,6 +44,11 @@ const router = createRouter({
       name: "LocationList",
       component: LocationList,
     },
+    {
+      path: "/registerUser",
+      name: "RegisterUser",
+      component: RegisterUser,
+    },
     // {
     //   path: '/about',
     //   name: 'about',
