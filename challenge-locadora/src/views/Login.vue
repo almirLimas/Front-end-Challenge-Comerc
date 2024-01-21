@@ -1,8 +1,8 @@
 <template>
-  <section class="flex justify-center items-center h-screen bg-white">
-    <div class="w-96 h-1/2 rounded-2xl shadow-xl p-10 bg-slate-50">
+  <section class="flex justify-center items-center h-screen">
+    <div class="w-96 m-5 rounded-2xl shadow-xl p-10 bg-white">
       <figure class="flex justify-center">
-        <img src="../assets/Icons/Movie.svg" alt="" class="w-24" />
+        <i class="fa-solid fa-g text-6xl text-cyan-500"></i>
       </figure>
       <form class="mt-16" @submit.prevent="submitForm">
         <InputText :label-name="'Documento'" :iput-name="'documento'" />

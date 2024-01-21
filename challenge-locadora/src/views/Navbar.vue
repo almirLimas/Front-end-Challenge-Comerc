@@ -1,61 +1,62 @@
 <template>
-  <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <svg
-        class="fill-current h-8 w-8 mr-2"
-        width="54"
-        height="54"
-        viewBox="0 0 54 54"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"
-        />
-      </svg>
-      <span class="font-semibold text-xl tracking-tight">Locadora</span>
-    </div>
-    <div class="block lg:hidden">
-      <button
-        class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
-      >
-        <svg
-          class="fill-current h-3 w-3"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
+  <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+    <div
+      class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
+    >
+      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <i class="fa-solid fa-g text-4xl text-cyan-500"></i>
+        <span
+          class="self-center text-2xl font-semibold whitespace-nowrap text-cyan-500"
+          >G.F.L - Locação</span
         >
-          <title>Menu</title>
-          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+      </a>
+      <button
+        data-collapse-toggle="navbar-dropdown"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-dropdown"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-5 h-5"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 17 14"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M1 1h15M1 7h15M1 13h15"
+          />
         </svg>
       </button>
-    </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-      <div class="text-sm lg:flex-grow">
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+      <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
+        <ul
+          class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
         >
-          Home
-        </a>
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
-        >
-          Clientes
-        </a>
-        <a
-          href="#responsive-header"
-          class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white"
-        >
-          Locação
-        </a>
-      </div>
-      <div>
-        <a
-          href="#"
-          class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0"
-          >Login ou Cadastra-se</a
-        >
+          <li>
+            <a
+              href="#"
+              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+              >Sair</a
+            >
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
 </template>
+
+<script setup lang="ts">
+import { onMounted } from "vue";
+import { initFlowbite } from "flowbite";
+
+// initialize components based on data attribute selectors
+onMounted(() => {
+  initFlowbite();
+});
+</script>
