@@ -1,23 +1,39 @@
 <template>
   <div>
-    <label class="relative inline-flex items-center cursor-pointer mt-10 ml-4">
-      <input type="checkbox" value="" class="sr-only peer" />
-      <div
-        class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"
-      ></div>
-      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">{{
-        title
-      }}</span>
-    </label>
+    <label
+      for="countries"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+      >{{ title }}</label
+    >
+    <select
+      @change="updateValue"
+      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    >
+      <option v-for="option in valueOptions" selected :value="option.value">
+        {{ option.name }}
+      </option>
+    </select>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 
-const emit = defineEmits(["clickCard"]);
+const emit = defineEmits(["clickCard", "update:modelValue"]);
 const props = defineProps({
   title: {
+    type: String,
+    required: true,
+  },
+  valueOptions: {
+    default() {
+      return [
+        { value: "ativo", name: "Ativo" },
+        { value: "desativado", name: "Desativado" },
+      ];
+    },
+  },
+  modelValue: {
     type: String,
     required: true,
   },
@@ -27,5 +43,9 @@ const clickCard = () => {
   emit("clickCard");
 };
 
+const updateValue = (e: Event) => {
+  emit("update:modelValue", (e.target as HTMLInputElement).value);
+};
+const valueOptions = ref(props.valueOptions);
 const title = ref(props.title);
 </script>

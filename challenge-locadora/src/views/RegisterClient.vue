@@ -4,7 +4,7 @@
       <form @submit.prevent="submitForm">
         <div v-if="etapa === 1">
           <h2 class="text-lg font-semibold mb-4 col-span-12">
-            Etapa 1: Informações Pessoais
+            Informações Pessoais
           </h2>
           <div class="grid xl:grid-cols-4 lg:grid-cols-2 sm:grid-cols-1 gap-2">
             <div class="mb-4">
@@ -31,39 +31,67 @@
             </div>
 
             <div class="mb-4">
-              <ToogleComponent :title="'Ativo'" />
+              <ToogleComponent :title="'Status'" v-model:model-value="status" />
             </div>
           </div>
         </div>
 
         <div v-if="etapa === 2">
-          <h2 class="text-lg font-semibold mb-4">
-            Etapa 2: Informações Adicionais
-          </h2>
-          <div class="mb-4">
-            <label
-              for="endereco"
-              class="block text-gray-700 text-sm font-bold mb-2"
-              >Endereço:</label
-            >
-            <input
-              v-model="endereco"
-              type="text"
-              id="endereco"
-              name="endereco"
-              required
-              class="w-full p-2 border border-gray-300 rounded-md"
-            />
+          <h2 class="text-lg font-semibold mb-4">Contatos</h2>
+          <div class="grid xl:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 gap-2">
+            <div class="mb-4">
+              <InputEmail
+                :label-name="'E-mail'"
+                :iput-name="'Email'"
+                v-model:model-value="email"
+              />
+            </div>
+            <div class="mb-4">
+              <InputText
+                :label-name="'Celular'"
+                :iput-name="'Celular'"
+                v-model:model-value="celular"
+              />
+            </div>
           </div>
         </div>
 
         <div v-if="etapa === 3">
-          <h2 class="text-lg font-semibold mb-4">Etapa 3: Confirmar</h2>
-          <p>Confirme suas informações antes de enviar.</p>
-          <div class="mb-4">
-            <strong>Nome:</strong> {{ nome }} <br />
-            <strong>Email:</strong> {{ email }} <br />
-            <strong>Endereço:</strong> {{ endereco }} <br />
+          <h2 class="text-lg font-semibold mb-4">Endereço</h2>
+          <div class="grid xl:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 gap-2">
+            <div class="mb-4">
+              <InputText
+                :label-name="'Cep'"
+                :iput-name="'Cep'"
+                v-model:model-value="cep"
+              />
+            </div>
+            <div class="mb-4">
+              <InputText
+                :label-name="'Logradouro'"
+                :iput-name="'Logradouro'"
+                v-model:model-value="logradouro"
+              />
+            </div>
+            <div class="mb-4">
+              <InputText
+                :label-name="'Bairro'"
+                :iput-name="'Bairro'"
+                v-model:model-value="bairro"
+              />
+            </div>
+            <div class="mb-4">
+              <InputText
+                :label-name="'Cidade'"
+                :iput-name="'Cidade'"
+                v-model:model-value="cidade"
+              />
+            </div>
+            <div class="mb-4">
+              <div class="mb-4">
+                <ToogleComponent :title="'Uf'" v-model:model-value="uf" />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -98,15 +126,20 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import InputText from "@/components/InputText.vue";
-import InputPassword from "@/components/InputPassword.vue";
+import InputEmail from "@/components/InputEmail.vue";
 import ToogleComponent from "@/components/ToogleComponent.vue";
 const etapa = ref(1);
 const nome = ref("");
 const sobreNome = ref("");
 const cpf = ref("");
 const email = ref("");
-const endereco = ref("");
-
+const celular = ref("");
+const cep = ref("");
+const logradouro = ref("");
+const bairro = ref("");
+const cidade = ref("");
+const uf = ref("");
+const status = ref("");
 const props = defineProps({
   titleCard: {
     type: String,
@@ -119,11 +152,18 @@ const props = defineProps({
 });
 
 const validarEtapaAtual = computed(() => {
-  console.log("kkkk", nome.value);
   if (etapa.value === 1) {
     return nome.value !== "" && sobreNome.value !== "" && cpf.value !== "";
   } else if (etapa.value === 2) {
-    return endereco.value !== "";
+    return email.value !== "" && celular.value !== "";
+  } else if (etapa.value === 3) {
+    return (
+      cep.value !== "" &&
+      logradouro.value !== "" &&
+      bairro.value !== "" &&
+      cidade.value !== "" &&
+      uf.value !== ""
+    );
   } else {
     return true; // Para a última etapa
   }
