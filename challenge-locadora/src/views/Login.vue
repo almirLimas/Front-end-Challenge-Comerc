@@ -4,7 +4,7 @@
       <figure class="flex justify-center">
         <i class="fa-solid fa-g text-6xl text-cyan-500"></i>
       </figure>
-      <form class="mt-16" @submit.prevent="submitForm">
+      <form class="mt-16">
         <InputText
           :label-name="'Documento'"
           :iput-name="'documento'"
@@ -16,7 +16,7 @@
           v-model:model-value="senha"
         />
         <button
-          type="submit"
+          @click.prevent="AddTodo"
           class="bg-blue-500 text-white px-4 py-2 rounded-md w-full mt-6"
         >
           Entrar
@@ -31,6 +31,14 @@ import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
+const user = useUserStore();
+
+const AddTodo = () => {
+  user.login("admin", "admin").then((res) => {
+    router.push({ path: "/home" });
+  });
+};
 
 const documento = ref("");
 const senha = ref("");

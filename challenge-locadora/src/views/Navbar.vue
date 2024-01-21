@@ -1,5 +1,8 @@
 <template>
-  <nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+  <nav
+    class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700"
+    v-if="user.isAdmin === true"
+  >
     <div
       class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
     >
@@ -54,6 +57,8 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import { initFlowbite } from "flowbite";
+import { useUserStore } from "@/stores/user";
+const user = useUserStore();
 
 // initialize components based on data attribute selectors
 onMounted(() => {
