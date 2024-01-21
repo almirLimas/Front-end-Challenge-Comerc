@@ -2,22 +2,37 @@
   <div class="flex justify-center items-center mt-40">
     <div class="container bg-white rounded-lg p-10">
       <form @submit.prevent="submitForm">
-        <div v-if="etapa === 1" class="grid grid-cols-12 gap-2">
+        <div v-if="etapa === 1">
           <h2 class="text-lg font-semibold mb-4 col-span-12">
             Etapa 1: Informações Pessoais
           </h2>
-          <div class="mb-4 col-span-6">
-            <InputText :label-name="'Nome'" :iput-name="'Nome'" />
-          </div>
+          <div class="grid xl:grid-cols-4 lg:grid-cols-2 sm:grid-cols-1 gap-2">
+            <div class="mb-4">
+              <InputText
+                :label-name="'Nome'"
+                :iput-name="'Nome'"
+                v-model:model-value="nome"
+              />
+            </div>
 
-          <div class="mb-4 col-span-6">
-            <InputText :label-name="'Documento'" :iput-name="'Documento'" />
-          </div>
-          <div class="mb-4 col-span-6">
-            <InputPassword :label-name="'Documento'" :iput-name="'Documento'" />
-          </div>
-          <div class="mb-4 col-span-6">
-            <ToogleComponent :title="'Ativo'" />
+            <div class="mb-4">
+              <InputText
+                :label-name="'Sobrenome'"
+                :iput-name="'SobreNome'"
+                v-model:model-value="sobreNome"
+              />
+            </div>
+            <div class="mb-4">
+              <InputText
+                :label-name="'Cpf'"
+                :iput-name="'Cpf'"
+                v-model:model-value="cpf"
+              />
+            </div>
+
+            <div class="mb-4">
+              <ToogleComponent :title="'Ativo'" />
+            </div>
           </div>
         </div>
 
@@ -87,6 +102,8 @@ import InputPassword from "@/components/InputPassword.vue";
 import ToogleComponent from "@/components/ToogleComponent.vue";
 const etapa = ref(1);
 const nome = ref("");
+const sobreNome = ref("");
+const cpf = ref("");
 const email = ref("");
 const endereco = ref("");
 
@@ -102,8 +119,9 @@ const props = defineProps({
 });
 
 const validarEtapaAtual = computed(() => {
+  console.log("kkkk", nome.value);
   if (etapa.value === 1) {
-    return nome.value !== "" && email.value !== "";
+    return nome.value !== "" && sobreNome.value !== "" && cpf.value !== "";
   } else if (etapa.value === 2) {
     return endereco.value !== "";
   } else {

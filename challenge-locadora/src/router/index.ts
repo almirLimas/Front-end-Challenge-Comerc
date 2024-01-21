@@ -6,6 +6,7 @@ import {
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import RegisterUser from "@/views/RegisterUser.vue";
+import RegisterClient from "@/views/RegisterClient.vue";
 import UserList from "@/views/UserList.vue";
 import ClientList from "@/views/ClientList.vue";
 import FilmList from "@/views/FilmList.vue";
@@ -48,6 +49,11 @@ const router = createRouter({
       path: "/registerUser",
       name: "RegisterUser",
       component: RegisterUser,
+    },
+    {
+      path: "/registerClient",
+      name: "RegisterClient",
+      component: RegisterClient,
     },
     // {
     //   path: '/about',

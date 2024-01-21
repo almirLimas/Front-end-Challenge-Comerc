@@ -4,6 +4,8 @@
       labelName
     }}</label>
     <input
+      :value="props.modelValue"
+      @input="updateValue"
       :id="iputName"
       type="text"
       :name="iputName"
@@ -16,11 +18,25 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const props = defineProps<{
-  labelName?: string;
-  iputName?: string;
-}>();
-
+const props = defineProps({
+  labelName: {
+    type: String,
+    required: true,
+  },
+  iputName: {
+    type: String,
+    required: true,
+  },
+  modelValue: {
+    type: String,
+    required: true,
+  },
+});
+const emit = defineEmits(["update:modelValue"]);
 const labelName = ref(props.labelName);
 const iputName = ref(props.iputName);
+
+const updateValue = (e: Event) => {
+  emit("update:modelValue", (e.target as HTMLInputElement).value);
+};
 </script>

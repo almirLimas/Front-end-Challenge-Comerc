@@ -2,22 +2,18 @@
   <div class="flex justify-center items-center mt-40">
     <div class="container bg-white rounded-lg p-10">
       <form @submit.prevent="submitForm">
-        <div v-if="etapa === 1" class="grid grid-cols-1 gap-2">
-          <h2 class="text-lg font-semibold mb-4 col-span-12">
-            Etapa 1: Informações Pessoais
-          </h2>
-          <div class="mb-4 lg:col-span-6 md:col-span-12 sm:col-span-12">
+        <div class="grid xl:grid-cols-4 lg:grid-cols-2 sm:grid-cols-1 gap-2">
+          <div class="mb-4">
             <InputText :label-name="'Nome'" :iput-name="'Nome'" />
           </div>
-
-          <div class="mb-4 lg:col-span-6 md:col-span-12 sm:col-span-12">
+          <div class="mb-4">
             <InputText :label-name="'Documento'" :iput-name="'Documento'" />
           </div>
-          <div class="mb-4 lg:col-span-6 md:col-span-12 sm:col-span-12">
-            <InputPassword :label-name="'Documento'" :iput-name="'Documento'" />
+          <div class="mb-4">
+            <InputPassword :label-name="'Senha'" :iput-name="'Senha'" />
           </div>
-          <div class="mb-4 lg:col-span-6 md:col-span-12 sm:col-span-12">
-            <ToogleComponent :title="'Ativo'" />
+          <div class="mb-4">
+            <ToogleComponent :title="'Status'" />
           </div>
         </div>
 
