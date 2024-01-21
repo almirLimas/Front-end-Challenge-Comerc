@@ -6,6 +6,10 @@ import {
 import Home from "@/views/Home.vue";
 import Login from "@/views/Login.vue";
 import RegisterUser from "@/views/RegisterUser.vue";
+import UserList from "@/views/UserList.vue";
+import ClientList from "@/views/ClientList.vue";
+import FilmList from "@/views/FilmList.vue";
+import LocationList from "@/views/LocationList.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -19,6 +23,26 @@ const router = createRouter({
       path: "/home",
       name: "Home",
       component: Home,
+    },
+    {
+      path: "/userList",
+      name: "UserList",
+      component: UserList,
+    },
+    {
+      path: "/clientList",
+      name: "ClientList",
+      component: ClientList,
+    },
+    {
+      path: "/filmList",
+      name: "FilmList",
+      component: FilmList,
+    },
+    {
+      path: "/locationList",
+      name: "LocationList",
+      component: LocationList,
     },
     // {
     //   path: '/about',

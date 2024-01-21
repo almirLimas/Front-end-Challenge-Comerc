@@ -5,15 +5,23 @@
         <Card
           :title-card="'Usuário'"
           :icon-card="'fa-solid fa-user'"
-          @click-card="router.push({ path: '/' })"
+          @click-card="router.push({ path: '/userList' })"
         />
         <Card
           :title-card="'Clientes'"
           :icon-card="'fa-solid fa-users'"
-          @click-card="clicou('kk')"
+          @click-card="router.push({ path: '/clientList' })"
         />
-        <Card :title-card="'Filmes'" :icon-card="'fa-solid fa-clapperboard'" />
-        <Card :title-card="'Locação'" :icon-card="'fa-solid fa-video'" />
+        <Card
+          :title-card="'Filmes'"
+          :icon-card="'fa-solid fa-clapperboard'"
+          @click-card="router.push({ path: '/filmList' })"
+        />
+        <Card
+          :title-card="'Locação'"
+          :icon-card="'fa-solid fa-video'"
+          @click-card="router.push({ path: '/locationList' })"
+        />
       </div>
     </div>
   </div>
