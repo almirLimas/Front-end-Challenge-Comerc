@@ -5,8 +5,16 @@
         <i class="fa-solid fa-g text-6xl text-cyan-500"></i>
       </figure>
       <form class="mt-16" @submit.prevent="submitForm">
-        <InputText :label-name="'Documento'" :iput-name="'documento'" />
-        <InputPassword :label-name="'Senha'" iput-name="'password'" />
+        <InputText
+          :label-name="'Documento'"
+          :iput-name="'documento'"
+          v-model:model-value="documento"
+        />
+        <InputPassword
+          :label-name="'Senha'"
+          iput-name="'password'"
+          v-model:model-value="senha"
+        />
         <button
           type="submit"
           class="bg-blue-500 text-white px-4 py-2 rounded-md w-full mt-6"
@@ -22,6 +30,10 @@
 import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
+
+const documento = ref("");
+const senha = ref("");
 const router = useRouter();
 
 const submitForm = () => {
