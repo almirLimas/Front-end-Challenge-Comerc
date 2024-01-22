@@ -1,45 +1,43 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
 import { useStorage } from "@vueuse/core";
 
-/**
- * Simulate a login
- */
-function apiLogin(a: string, p: string) {
-  if (a === "admin" && p === "admin") return Promise.resolve({ isAdmin: true });
-  if (p === "ed") return Promise.resolve({ isAdmin: false });
-  return Promise.reject(new Error("invalid credentials"));
-}
-
 export const useUserStore = defineStore({
   id: "user",
 
   state: () => ({
-    name: "Eduardo",
-    isAdmin: false,
+    userData: useStorage("userData", []),
+    isLogged: false,
   }),
 
   actions: {
-    logout() {
-      this.$patch({
-        name: "",
-        isAdmin: false,
-      });
+    async logout() {
+      useStorage("userData", []);
 
-      // we could do other stuff like redirecting the user
+      this.isLogged = false;
     },
 
-    /**
-     * Attempt to login a user
-     */
     async login(user: string, password: string) {
-      console.log("bla bla blsa");
-      useStorage("my-store", { hello: "hi", greeting: "Hello" });
-      const userData = await apiLogin(user, password);
-
-      this.$patch({
-        name: user,
-        ...userData,
+      let storedUser = JSON.parse(localStorage.getItem("userData") || "[]");
+      let userFound = storedUser.find(function (u: any) {
+        return u.name === user && u.password === password;
       });
+
+      if (
+        (userFound && userFound.active === "true") ||
+        (user === "admin" && password === "admin")
+      ) {
+        this.isLogged = true;
+        return true;
+      } else {
+        return false;
+      }
+    },
+
+    async createUser(user: any) {
+      //@ts-ignore
+      this.userData.push(user);
+
+      return true;
     },
   },
 });

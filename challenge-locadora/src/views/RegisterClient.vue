@@ -1,8 +1,8 @@
 <template>
   <div class="flex justify-center items-center mt-40">
     <div class="container bg-white rounded-lg p-10">
-      <form @submit.prevent="submitForm">
-        <div v-if="etapa === 1">
+      <form>
+        <div v-if="step === 1">
           <h2 class="text-lg font-semibold mb-4 col-span-12">
             Informações Pessoais
           </h2>
@@ -11,7 +11,7 @@
               <InputText
                 :label-name="'Nome'"
                 :iput-name="'Nome'"
-                v-model:model-value="nome"
+                v-model:model-value="name"
               />
             </div>
 
@@ -19,7 +19,7 @@
               <InputText
                 :label-name="'Sobrenome'"
                 :iput-name="'SobreNome'"
-                v-model:model-value="sobreNome"
+                v-model:model-value="surName"
               />
             </div>
             <div class="mb-4">
@@ -36,7 +36,7 @@
           </div>
         </div>
 
-        <div v-if="etapa === 2">
+        <div v-if="step === 2">
           <h2 class="text-lg font-semibold mb-4">Contatos</h2>
           <div class="grid xl:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 gap-2">
             <div class="mb-4">
@@ -50,13 +50,13 @@
               <InputText
                 :label-name="'Celular'"
                 :iput-name="'Celular'"
-                v-model:model-value="celular"
+                v-model:model-value="phone"
               />
             </div>
           </div>
         </div>
 
-        <div v-if="etapa === 3">
+        <div v-if="step === 3">
           <h2 class="text-lg font-semibold mb-4">Endereço</h2>
           <div class="grid xl:grid-cols-2 lg:grid-cols-2 sm:grid-cols-1 gap-2">
             <div class="mb-4">
@@ -70,21 +70,21 @@
               <InputText
                 :label-name="'Logradouro'"
                 :iput-name="'Logradouro'"
-                v-model:model-value="logradouro"
+                v-model:model-value="street"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Bairro'"
                 :iput-name="'Bairro'"
-                v-model:model-value="bairro"
+                v-model:model-value="neighborhood"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Cidade'"
                 :iput-name="'Cidade'"
-                v-model:model-value="cidade"
+                v-model:model-value="city"
               />
             </div>
             <div class="mb-4">
@@ -97,21 +97,22 @@
 
         <div class="flex justify-between mt-8">
           <button
-            v-if="etapa > 1"
-            @click.prevent="anteriorEtapa"
+            v-if="step > 1"
+            @click.prevent="previousStep"
             class="bg-gray-500 text-white px-4 py-2 rounded-md"
           >
             Anterior
           </button>
           <button
-            v-if="etapa < 3 && validarEtapaAtual"
-            @click.prevent="proximoEtapa"
+            v-if="step < 3 && validarEtapaAtual"
+            @click.prevent="nextStep"
             class="bg-blue-500 text-white px-4 py-2 rounded-md"
           >
             Próximo
           </button>
           <button
-            v-if="etapa === 3 && validarEtapaAtual"
+            @click="submitForm"
+            v-if="step === 3 && validarEtapaAtual"
             type="submit"
             class="bg-green-500 text-white px-4 py-2 rounded-md"
           >
@@ -128,83 +129,48 @@ import { computed, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputEmail from "@/components/InputEmail.vue";
 import ToogleComponent from "@/components/ToogleComponent.vue";
-const etapa = ref(1);
-const nome = ref("");
-const sobreNome = ref("");
+const step = ref(1);
+const name = ref("");
+const surName = ref("");
 const cpf = ref("");
 const email = ref("");
-const celular = ref("");
+const phone = ref("");
 const cep = ref("");
-const logradouro = ref("");
-const bairro = ref("");
-const cidade = ref("");
+const street = ref("");
+const neighborhood = ref("");
+const city = ref("");
 const uf = ref("");
 const status = ref("");
-const props = defineProps({
-  titleCard: {
-    type: String,
-    required: true,
-  },
-  iconCard: {
-    type: String,
-    required: true,
-  },
-});
 
 const validarEtapaAtual = computed(() => {
-  if (etapa.value === 1) {
-    return nome.value !== "" && sobreNome.value !== "" && cpf.value !== "";
-  } else if (etapa.value === 2) {
-    return email.value !== "" && celular.value !== "";
-  } else if (etapa.value === 3) {
+  if (step.value === 1) {
+    return name.value !== "" && surName.value !== "" && cpf.value !== "";
+  } else if (step.value === 2) {
+    return email.value !== "" && phone.value !== "";
+  } else if (step.value === 3) {
     return (
       cep.value !== "" &&
-      logradouro.value !== "" &&
-      bairro.value !== "" &&
-      cidade.value !== "" &&
+      street.value !== "" &&
+      neighborhood.value !== "" &&
+      city.value !== "" &&
       uf.value !== ""
     );
   } else {
-    return true; // Para a última etapa
+    return true;
   }
 });
 
-const proximoEtapa = () => {
+const nextStep = () => {
   if (validarEtapaAtual) {
-    etapa.value++;
+    step.value++;
   }
 };
 
-const anteriorEtapa = () => {
-  etapa.value--;
+const previousStep = () => {
+  step.value--;
 };
 
 const submitForm = () => {
   console.log("Formulário enviado:");
 };
-// computed: {
-//     validarEtapaAtual() {
-//       if (this.etapa === 1) {
-//         return this.nome !== "" && this.email !== "";
-//       } else if (this.etapa === 2) {
-//         return this.endereco !== "";
-//       } else {
-//         return true; // Para a última etapa
-//       }
-//     },
-//   },
-//   methods: {
-//     proximoEtapa() {
-//       if (this.validarEtapaAtual) {
-//         this.etapa++;
-//       }
-//     },
-//     anteriorEtapa() {
-//       this.etapa--;
-//     },
-//     submitForm() {
-//       // Lógica para lidar com o envio do formulário
-//       console.log("Formulário enviado:", this.nome, this.email, this.endereco);
-//     },
-//   },
 </script>
