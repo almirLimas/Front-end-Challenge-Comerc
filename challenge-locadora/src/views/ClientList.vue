@@ -9,7 +9,7 @@
           <i class="fa-solid fa-user-plus mr-4"></i> Novo Cliente
         </button>
       </div>
-      <table class="table-fixed border-collapse border border-slate-400 w-full">
+      <table class="table table-bordered w-full">
         <thead>
           <tr>
             <th class="border border-slate-300 h-14">ID</th>
@@ -55,8 +55,4 @@
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
 const router = useRouter();
-
-const clicou = (e: any) => {
-  console.log(e);
-};
 </script>

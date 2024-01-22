@@ -25,7 +25,7 @@
             />
           </div>
           <div class="mb-4">
-            <ToogleComponent
+            <SelectComponent
               :title="'Status'"
               v-model:model-value="userdata.status"
             />
@@ -50,7 +50,7 @@
 import { computed, inject, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
-import ToogleComponent from "@/components/ToogleComponent.vue";
+import SelectComponent from "@/components/SelectComponent.vue";
 import { useUserStore } from "@/stores/user";
 const user = useUserStore();
 const swal: any = inject("$swal");

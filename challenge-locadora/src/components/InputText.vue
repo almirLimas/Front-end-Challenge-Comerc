@@ -6,6 +6,7 @@
     <input
       :value="props.modelValue"
       @input="updateValue"
+      @blur="updateValueBlur"
       :id="iputName"
       type="text"
       :name="iputName"
@@ -32,11 +33,14 @@ const props = defineProps({
     required: true,
   },
 });
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "blurEvent"]);
 const labelName = ref(props.labelName);
 const iputName = ref(props.iputName);
 
 const updateValue = (e: Event) => {
   emit("update:modelValue", (e.target as HTMLInputElement).value);
+};
+const updateValueBlur = (e: Event) => {
+  emit("blurEvent", (e.target as HTMLInputElement).value);
 };
 </script>

@@ -11,7 +11,7 @@
               <InputText
                 :label-name="'Nome'"
                 :iput-name="'Nome'"
-                v-model:model-value="name"
+                v-model:model-value="clientData.name"
               />
             </div>
 
@@ -19,19 +19,22 @@
               <InputText
                 :label-name="'Sobrenome'"
                 :iput-name="'SobreNome'"
-                v-model:model-value="surName"
+                v-model:model-value="clientData.surName"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Cpf'"
                 :iput-name="'Cpf'"
-                v-model:model-value="cpf"
+                v-model:model-value="clientData.cpf"
               />
             </div>
 
             <div class="mb-4">
-              <ToogleComponent :title="'Status'" v-model:model-value="status" />
+              <SelectComponent
+                :title="'Status'"
+                v-model:model-value="clientData.status"
+              />
             </div>
           </div>
         </div>
@@ -43,14 +46,14 @@
               <InputEmail
                 :label-name="'E-mail'"
                 :iput-name="'Email'"
-                v-model:model-value="email"
+                v-model:model-value="clientData.email"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Celular'"
                 :iput-name="'Celular'"
-                v-model:model-value="phone"
+                v-model:model-value="clientData.phone"
               />
             </div>
           </div>
@@ -63,33 +66,37 @@
               <InputText
                 :label-name="'Cep'"
                 :iput-name="'Cep'"
-                v-model:model-value="cep"
+                v-model:model-value="clientData.cep"
+                @blur-event="searchCep"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Logradouro'"
                 :iput-name="'Logradouro'"
-                v-model:model-value="street"
+                v-model:model-value="clientData.street"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Bairro'"
                 :iput-name="'Bairro'"
-                v-model:model-value="neighborhood"
+                v-model:model-value="clientData.neighborhood"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Cidade'"
                 :iput-name="'Cidade'"
-                v-model:model-value="city"
+                v-model:model-value="clientData.city"
               />
             </div>
             <div class="mb-4">
               <div class="mb-4">
-                <ToogleComponent :title="'Uf'" v-model:model-value="uf" />
+                <SelectComponent
+                  :title="'Uf'"
+                  v-model:model-value="clientData.uf"
+                />
               </div>
             </div>
           </div>
@@ -113,7 +120,7 @@
           <button
             @click="submitForm"
             v-if="step === 3 && validarEtapaAtual"
-            type="submit"
+            type="button"
             class="bg-green-500 text-white px-4 py-2 rounded-md"
           >
             Enviar
@@ -125,40 +132,75 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, inject, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputEmail from "@/components/InputEmail.vue";
-import ToogleComponent from "@/components/ToogleComponent.vue";
+import SelectComponent from "@/components/SelectComponent.vue";
+import { useClientStore } from "@/stores/client";
+const client = useClientStore();
+const swal: any = inject("$swal");
 const step = ref(1);
-const name = ref("");
-const surName = ref("");
-const cpf = ref("");
-const email = ref("");
-const phone = ref("");
-const cep = ref("");
-const street = ref("");
-const neighborhood = ref("");
-const city = ref("");
-const uf = ref("");
-const status = ref("");
+
+const clientData = ref({
+  name: "",
+  surName: "",
+  cpf: "",
+  email: "",
+  phone: "",
+  cep: "",
+  street: "",
+  neighborhood: "",
+  city: "",
+  uf: "",
+  status: "ativo",
+});
 
 const validarEtapaAtual = computed(() => {
   if (step.value === 1) {
-    return name.value !== "" && surName.value !== "" && cpf.value !== "";
+    return (
+      clientData.value.name !== "" &&
+      clientData.value.surName !== "" &&
+      clientData.value.cpf !== ""
+    );
   } else if (step.value === 2) {
-    return email.value !== "" && phone.value !== "";
+    return clientData.value.email !== "" && clientData.value.phone !== "";
   } else if (step.value === 3) {
     return (
-      cep.value !== "" &&
-      street.value !== "" &&
-      neighborhood.value !== "" &&
-      city.value !== "" &&
-      uf.value !== ""
+      clientData.value.cep !== "" &&
+      clientData.value.street !== "" &&
+      clientData.value.neighborhood !== "" &&
+      clientData.value.city !== "" &&
+      clientData.value.uf !== ""
     );
   } else {
     return true;
   }
 });
+
+const submitForm = () => {
+  client.createClient(clientData.value).then((res) => {
+    if (res) {
+      swal
+        .fire({
+          title: "Tudo Certo!",
+          icon: "success",
+          text: "Cadastro realizado com sucesso!",
+        })
+        .then((result: any) => {
+          clearForm();
+        });
+    }
+  });
+};
+
+const searchCep = () => {
+  client.searchCep(clientData.value.cep).then((res) => {
+    clientData.value.neighborhood = res.data.bairro;
+    clientData.value.city = res.data.localidade;
+    clientData.value.street = res.data.logradouro;
+    clientData.value.uf = res.data.uf;
+  });
+};
 
 const nextStep = () => {
   if (validarEtapaAtual) {
@@ -169,8 +211,7 @@ const nextStep = () => {
 const previousStep = () => {
   step.value--;
 };
-
-const submitForm = () => {
-  console.log("Formulário enviado:");
+const clearForm = () => {
+  window.location.reload();
 };
 </script>
