@@ -195,10 +195,10 @@ const submitForm = () => {
 
 const searchCep = () => {
   client.searchCep(clientData.value.cep).then((res) => {
-    clientData.value.neighborhood = res.data.bairro;
-    clientData.value.city = res.data.localidade;
-    clientData.value.street = res.data.logradouro;
-    clientData.value.uf = res.data.uf;
+    clientData.value.neighborhood = res?.data.bairro;
+    clientData.value.city = res?.data.localidade;
+    clientData.value.street = res?.data.logradouro;
+    clientData.value.uf = res?.data.uf;
   });
 };
 
