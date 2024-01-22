@@ -142,6 +142,7 @@ const swal: any = inject("$swal");
 const step = ref(1);
 
 const clientData = ref({
+  id: 0,
   name: "",
   surName: "",
   cpf: "",
@@ -178,6 +179,7 @@ const validarEtapaAtual = computed(() => {
 });
 
 const submitForm = () => {
+  clientData.value.id = client.clientData.length++;
   client.createClient(clientData.value).then((res) => {
     if (res) {
       swal

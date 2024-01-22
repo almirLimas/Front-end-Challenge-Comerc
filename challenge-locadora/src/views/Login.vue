@@ -32,7 +32,9 @@ import InputPassword from "@/components/InputPassword.vue";
 import { useRouter } from "vue-router";
 import { inject, ref } from "vue";
 import { useUserStore } from "@/stores/user";
+import { useClientStore } from "@/stores/client";
 const user = useUserStore();
+const client = useClientStore();
 const swal: any = inject("$swal");
 const userName = ref("");
 const password = ref("");
@@ -47,6 +49,8 @@ const submitLogin = () => {
         text: "Usuário não escontrado!",
       });
     } else {
+      //@ts-ignore
+      client.clientData.push(...client.clientMock);
       router.push({ path: "/home" });
     }
   });

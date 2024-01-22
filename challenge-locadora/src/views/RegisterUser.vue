@@ -47,15 +47,33 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from "vue";
+import { computed, initCustomFormatter, inject, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
 import { useUserStore } from "@/stores/user";
+import { AgGridVue } from "ag-grid-vue3"; // Vue Grid Logic
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 const user = useUserStore();
 const swal: any = inject("$swal");
 
+const rowData = ref([
+  { make: "Tesla", model: "Model Y", price: 64950, electric: true },
+  { make: "Ford", model: "F-Series", price: 33850, electric: false },
+  { make: "Toyota", model: "Corolla", price: 29600, electric: false },
+]);
+
+// Column Definitions: Defines & controls grid columns.
+const colDefs = ref([
+  { field: "make" },
+  { field: "model" },
+  { field: "price" },
+  { field: "electric" },
+]);
+
 const userdata = ref({
+  id: 0,
   name: "",
   doc: "",
   password: "",
@@ -63,6 +81,7 @@ const userdata = ref({
 });
 
 const submitForm = () => {
+  userdata.value.id = user.userData.length++;
   user.createUser(userdata.value).then((res) => {
     if (res) {
       swal

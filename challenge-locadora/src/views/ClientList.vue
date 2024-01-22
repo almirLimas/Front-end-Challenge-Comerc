@@ -9,50 +9,66 @@
           <i class="fa-solid fa-user-plus mr-4"></i> Novo Cliente
         </button>
       </div>
-      <table class="table table-bordered w-full">
-        <thead>
-          <tr>
-            <th class="border border-slate-300 h-14">ID</th>
-            <th class="border border-slate-300">Nome</th>
-            <th class="border border-slate-300">Documento</th>
-            <th class="border border-slate-300">Documento</th>
-            <th class="border border-slate-300">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Malcolm Lockyer
-            </td>
-            <td class="border border-slate-300 p-2">Malcolm Lockyer</td>
-            <td class="border border-slate-300 p-2">Malcolm Lockyer</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Witchy Woman
-            </td>
-            <td class="border border-slate-300">The Eagles</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Shining Star
-            </td>
-            <td class="border border-slate-300">Earth, Wind, and Fire</td>
-            <td class="border border-slate-300">1975</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <ag-grid-vue
+        class="ag-theme-quartz"
+        :rowData="rowData"
+        :columnDefs="colDefs"
+        checkboxSelection="false"
+        rowSelection="single"
+        style="height: 40rem; width: auto"
+        @cellClicked="cellWasClicked"
+      >
+      </ag-grid-vue>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
+import { AgGridVue } from "ag-grid-vue3"; // Vue Grid Logic
+import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useClientStore } from "@/stores/client";
+const client = useClientStore();
+
+const rowData = ref([
+  {
+    id: 1,
+    name: "Carto",
+    surName: "polo",
+    cpf: "1121123123",
+    email: "polo@polo.com",
+    phone: "11 1313123",
+    cep: "09890833",
+    street: "Rua polo",
+    neighborhood: "Bairro Polo",
+    city: "São Paulo",
+    uf: "SP",
+    status: "ativo",
+  },
+]);
+
+rowData.value = client.clientData;
+
+// Column Definitions: Defines & controls grid columns.
+const colDefs = ref([
+  { field: "id", sortable: true, filter: true },
+  { field: "name", sortable: true, filter: true },
+  { field: "surName", sortable: true, filter: true },
+  { field: "cpf", sortable: true, filter: true },
+  { field: "email", sortable: true, filter: true },
+  { field: "phone", sortable: true, filter: true },
+  { field: "cep", sortable: true, filter: true },
+  { strfieldeet: "street", sortable: true, filter: true },
+  { field: "neighborhood", sortable: true, filter: true },
+  { field: "city", sortable: true, filter: true },
+  { field: "uf", sortable: true, filter: true },
+  { field: "status", sortable: true, filter: true },
+]);
+
+const cellWasClicked = (event: any) => {
+  console.log(event);
+};
 const router = useRouter();
 </script>
