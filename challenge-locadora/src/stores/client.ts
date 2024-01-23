@@ -22,7 +22,6 @@ export const useClientStore = defineStore({
         bairro: "sao Jose",
         cidade: "São Paulo",
         uf: "SP",
-        status: "ativo",
       },
       {
         id: 2,
@@ -36,7 +35,6 @@ export const useClientStore = defineStore({
         bairro: "sao Jose",
         cidade: "São Paulo",
         uf: "SP",
-        status: "desativo",
       },
       {
         id: 3,
@@ -50,7 +48,6 @@ export const useClientStore = defineStore({
         bairro: "sao Jose",
         cidade: "São Paulo",
         uf: "SP",
-        status: "ativo",
       },
       {
         id: 4,
@@ -64,7 +61,6 @@ export const useClientStore = defineStore({
         bairro: "sao Jose",
         cidade: "São Paulo",
         uf: "SP",
-        status: "ativo",
       },
       {
         id: 5,
@@ -78,7 +74,6 @@ export const useClientStore = defineStore({
         bairro: "sao Jose",
         cidade: "São Paulo",
         uf: "SP",
-        status: "ativo",
       },
     ],
   }),
