@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center lg:mt-40 xl:mt-40 sm:mt-16">
+  <div class="flex justify-center items-center">
     <div class="container">
       <div class="grid lg:grid-cols-3 md:grid-cols-1 gap-4">
         <Card
