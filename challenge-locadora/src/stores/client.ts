@@ -5,7 +5,7 @@ import axios from "axios";
 export const useClientStore = defineStore({
   id: "client",
   state: () => ({
-    clientData: useStorage("clientData", []),
+    clientData: useStorage("clientData", [] as any[]),
     clientDataUpdatde: useStorage("clientDataUpdatde", {}),
     isUpdateClient: useStorage("isUpdateClient", false),
     localStorageClient: useLocalStorage("clientData", []),
