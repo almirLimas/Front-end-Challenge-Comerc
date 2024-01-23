@@ -7,21 +7,21 @@
             <InputText
               :label-name="'Nome'"
               :iput-name="'Nome'"
-              v-model:model-value="userdata.name"
+              v-model:model-value="userdata.nome"
             />
           </div>
           <div class="mb-4">
             <InputText
               :label-name="'Documento'"
               :iput-name="'Documento'"
-              v-model:model-value="userdata.doc"
+              v-model:model-value="userdata.documento"
             />
           </div>
           <div class="mb-4">
             <InputPassword
               :label-name="'Senha'"
               :iput-name="'Senha'"
-              v-model:model-value="userdata.password"
+              v-model:model-value="userdata.senha"
             />
           </div>
           <div class="mb-4">
@@ -34,11 +34,20 @@
 
         <div class="flex justify-between mt-8">
           <button
+            v-if="isUpdateUser === false"
             @click="validForm"
             type="button"
             class="bg-green-500 text-white px-4 py-2 rounded-md"
           >
-            Enviar
+            Salvar
+          </button>
+          <button
+            v-else
+            @click="update"
+            type="button"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Editar
           </button>
         </div>
       </form>
@@ -47,37 +56,30 @@
 </template>
 
 <script setup lang="ts">
-import { computed, initCustomFormatter, inject, ref } from "vue";
+import { computed, initCustomFormatter, inject, onMounted, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
 import { useUserStore } from "@/stores/user";
-import { AgGridVue } from "ag-grid-vue3"; // Vue Grid Logic
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
+import router from "@/router";
 const user = useUserStore();
 const swal: any = inject("$swal");
-
-const rowData = ref([
-  { make: "Tesla", model: "Model Y", price: 64950, electric: true },
-  { make: "Ford", model: "F-Series", price: 33850, electric: false },
-  { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-]);
-
-// Column Definitions: Defines & controls grid columns.
-const colDefs = ref([
-  { field: "make" },
-  { field: "model" },
-  { field: "price" },
-  { field: "electric" },
-]);
-
+const isUpdateUser = ref(false);
 const userdata = ref({
   id: 0,
-  name: "",
-  doc: "",
-  password: "",
+  nome: "",
+  documento: "",
+  senha: "",
   status: "ativo",
+});
+
+onMounted(() => {
+  isUpdateUser.value = JSON.parse(localStorage.getItem("isUpdateUser") || "{}");
+  if (isUpdateUser.value) {
+    userdata.value = JSON.parse(
+      localStorage.getItem("userDataUpdatde") || "{}"
+    );
+  }
 });
 
 const submitForm = () => {
@@ -115,6 +117,23 @@ const validForm = () => {
     submitForm();
   }
 };
+
+const update = () => {
+  user.updateUser(userdata.value).then((res) => {
+    if (res) {
+      swal
+        .fire({
+          title: "Tudo Certo!",
+          icon: "success",
+          text: "Dados alterados com sucesso!",
+        })
+        .then((result: any) => {
+          router.push({ path: "/userList" });
+        });
+    }
+  });
+};
+
 const clearForm = () => {
   window.location.reload();
 };

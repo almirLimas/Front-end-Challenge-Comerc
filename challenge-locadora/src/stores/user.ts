@@ -1,46 +1,49 @@
 import { defineStore, acceptHMRUpdate } from "pinia";
-import { useStorage } from "@vueuse/core";
+import { useStorage, useLocalStorage } from "@vueuse/core";
 
 export const useUserStore = defineStore({
   id: "user",
 
   state: () => ({
     userData: useStorage("userData", []),
+    userDataUpdatde: useStorage("userDataUpdatde", {}),
+    isUpdateUser: useStorage("isUpdateUser", false),
     isLogged: false,
+    localStorageUsers: useLocalStorage("userData"),
     userMock: [
       {
         id: 1,
-        name: "Stalone Pereeira",
-        doc: "12345",
-        password: "123",
+        nome: "Stalone Pereeira",
+        documento: "12345",
+        senha: "123",
         status: "ativo",
       },
       {
         id: 2,
-        name: "Ribeiro dos Pinhais",
-        doc: "1234",
-        password: "123",
+        nome: "Ribeiro dos Pinhais",
+        documento: "1234",
+        senha: "123",
         status: "ativo",
       },
       {
         id: 3,
-        name: "Lian Silva",
-        doc: "12345",
-        password: "123",
+        nome: "Lian Silva",
+        documento: "12345",
+        senha: "123",
         status: "ativo",
       },
       {
         id: 4,
-        name: "Junio Junior",
-        doc: "12345",
-        password: "123",
+        nome: "Junio Junior",
+        documento: "12345",
+        senha: "123",
         status: "ativo",
       },
       {
         id: 5,
-        name: "Carlos Santos",
-        doc: "12345",
-        password: "123",
+        nome: "Carlos Santos",
+        documento: "12345",
+        senha: "123",
         status: "desativo",
       },
     ],
@@ -74,11 +77,48 @@ export const useUserStore = defineStore({
     },
 
     async createUser(user: any) {
-      console.log(user, "esse entrouuuu");
       //@ts-ignore
       this.userData.push(user);
 
       return true;
+    },
+    isUpdateUserSet(update: Boolean) {
+      this.isUpdateUser = update;
+    },
+    updateUserSet(user: any) {
+      this.userDataUpdatde = user;
+    },
+    async updateUser(user: any) {
+      const objectUpdate = this.userData.find((obj) => obj.id === user.id);
+
+      if (objectUpdate) {
+        objectUpdate.nome = user.nome;
+        objectUpdate.documento = user.documento;
+        objectUpdate.senha = user.senha;
+        // Atualizar dados no localStorage
+        this.localStorageUsers = this.userData;
+        return true;
+      } else {
+        console.error("Objeto não encontrado para editar.");
+        return false;
+      }
+    },
+    async deleteUser(userId: number) {
+      // Encontrar o índice do usuário no array
+      const index = this.userData.findIndex((user) => user.id === userId);
+
+      console.log(index, "esse é o index");
+
+      if (index !== -1) {
+        // Remover o usuário do array
+        this.userData.splice(index, 1);
+
+        // Atualizar dados no localStorage
+        this.localStorageUsers = this.userData;
+        return true;
+      } else {
+        return false;
+      }
     },
   },
 });

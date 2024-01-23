@@ -11,7 +11,7 @@
               <InputText
                 :label-name="'Nome'"
                 :iput-name="'Nome'"
-                v-model:model-value="clientData.name"
+                v-model:model-value="clientData.nome"
               />
             </div>
 
@@ -19,7 +19,7 @@
               <InputText
                 :label-name="'Sobrenome'"
                 :iput-name="'SobreNome'"
-                v-model:model-value="clientData.surName"
+                v-model:model-value="clientData.sobreNome"
               />
             </div>
             <div class="mb-4">
@@ -27,13 +27,6 @@
                 :label-name="'Cpf'"
                 :iput-name="'Cpf'"
                 v-model:model-value="clientData.cpf"
-              />
-            </div>
-
-            <div class="mb-4">
-              <SelectComponent
-                :title="'Status'"
-                v-model:model-value="clientData.status"
               />
             </div>
           </div>
@@ -53,7 +46,7 @@
               <InputText
                 :label-name="'Celular'"
                 :iput-name="'Celular'"
-                v-model:model-value="clientData.phone"
+                v-model:model-value="clientData.celular"
               />
             </div>
           </div>
@@ -74,21 +67,21 @@
               <InputText
                 :label-name="'Logradouro'"
                 :iput-name="'Logradouro'"
-                v-model:model-value="clientData.street"
+                v-model:model-value="clientData.logradouro"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Bairro'"
                 :iput-name="'Bairro'"
-                v-model:model-value="clientData.neighborhood"
+                v-model:model-value="clientData.bairro"
               />
             </div>
             <div class="mb-4">
               <InputText
                 :label-name="'Cidade'"
                 :iput-name="'Cidade'"
-                v-model:model-value="clientData.city"
+                v-model:model-value="clientData.cidade"
               />
             </div>
             <div class="mb-4">
@@ -119,11 +112,19 @@
           </button>
           <button
             @click="submitForm"
-            v-if="step === 3 && validarEtapaAtual"
+            v-if="step === 3 && validarEtapaAtual && isUpdateClient === false"
             type="button"
             class="bg-green-500 text-white px-4 py-2 rounded-md"
           >
             Enviar
+          </button>
+          <button
+            v-if="step === 3 && validarEtapaAtual && isUpdateClient === true"
+            @click="update"
+            type="button"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md"
+          >
+            Editar
           </button>
         </div>
       </form>
@@ -132,45 +133,57 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, ref } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputEmail from "@/components/InputEmail.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
 import { useClientStore } from "@/stores/client";
+import router from "@/router";
 const client = useClientStore();
 const swal: any = inject("$swal");
 const step = ref(1);
+const isUpdateClient = ref(false);
 
 const clientData = ref({
   id: 0,
-  name: "",
-  surName: "",
+  nome: "",
+  sobreNome: "",
   cpf: "",
   email: "",
-  phone: "",
+  celular: "",
   cep: "",
-  street: "",
-  neighborhood: "",
-  city: "",
+  logradouro: "",
+  bairro: "",
+  cidade: "",
   uf: "",
-  status: "ativo",
+});
+
+onMounted(() => {
+  isUpdateClient.value = JSON.parse(
+    localStorage.getItem("isUpdateClient") || "{}"
+  );
+  if (isUpdateClient.value) {
+    clientData.value = JSON.parse(
+      localStorage.getItem("clientDataUpdatde") || "{}"
+    );
+  }
 });
 
 const validarEtapaAtual = computed(() => {
   if (step.value === 1) {
     return (
-      clientData.value.name !== "" &&
-      clientData.value.surName !== "" &&
+      clientData.value.nome !== "" &&
+      clientData.value.sobreNome !== "" &&
       clientData.value.cpf !== ""
     );
   } else if (step.value === 2) {
-    return clientData.value.email !== "" && clientData.value.phone !== "";
+    return clientData.value.email !== "" && clientData.value.celular !== "";
   } else if (step.value === 3) {
     return (
       clientData.value.cep !== "" &&
-      clientData.value.street !== "" &&
-      clientData.value.neighborhood !== "" &&
-      clientData.value.city !== "" &&
+      clientData.value.logradouro !== "" &&
+      clientData.value.bairro !== "" &&
+      clientData.value.cidade !== "" &&
       clientData.value.uf !== ""
     );
   } else {
@@ -195,11 +208,27 @@ const submitForm = () => {
   });
 };
 
+const update = () => {
+  client.updateClient(clientData.value).then((res) => {
+    if (res) {
+      swal
+        .fire({
+          title: "Tudo Certo!",
+          icon: "success",
+          text: "Dados alterados com sucesso!",
+        })
+        .then((result: any) => {
+          router.push({ path: "/clientList" });
+        });
+    }
+  });
+};
+
 const searchCep = () => {
   client.searchCep(clientData.value.cep).then((res) => {
-    clientData.value.neighborhood = res?.data.bairro;
-    clientData.value.city = res?.data.localidade;
-    clientData.value.street = res?.data.logradouro;
+    clientData.value.bairro = res?.data.bairro;
+    clientData.value.cidade = res?.data.localidade;
+    clientData.value.logradouro = res?.data.logradouro;
     clientData.value.uf = res?.data.uf;
   });
 };

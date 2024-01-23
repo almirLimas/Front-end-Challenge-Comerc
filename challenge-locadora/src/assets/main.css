@@ -42,3 +42,7 @@ body {
   font-style: normal;
   */
 }
+button:disabled {
+  background-color: rgba(190, 190, 190, 0.459);
+  color: #c9c9c9;
+}
