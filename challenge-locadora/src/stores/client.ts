@@ -102,7 +102,7 @@ export const useClientStore = defineStore({
         console.error(error);
       }
     },
-    isUpdateClientSet(update: Boolean) {
+    isUpdateClientSet(update: any) {
       this.isUpdateClient = update;
     },
     updateClientSet(client: any) {
