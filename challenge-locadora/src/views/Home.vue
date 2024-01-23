@@ -31,8 +31,4 @@
 import Card from "@/components/Card.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
-
-const clicou = (e: any) => {
-  console.log(e);
-};
 </script>

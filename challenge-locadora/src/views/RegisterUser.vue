@@ -34,7 +34,7 @@
 
         <div class="flex justify-between mt-8">
           <button
-            v-if="isUpdateUser === false"
+            v-if="user.isUpdateUser === false"
             @click="validForm"
             type="button"
             class="bg-green-500 text-white px-4 py-2 rounded-md"
@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, initCustomFormatter, inject, onMounted, ref } from "vue";
+import { inject, onMounted, ref } from "vue";
 import InputText from "@/components/InputText.vue";
 import InputPassword from "@/components/InputPassword.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
@@ -79,6 +79,7 @@ onMounted(() => {
     userdata.value = JSON.parse(
       localStorage.getItem("userDataUpdatde") || "{}"
     );
+  } else {
   }
 });
 

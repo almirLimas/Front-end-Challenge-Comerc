@@ -8,7 +8,7 @@ export const useUserStore = defineStore({
     userData: useStorage("userData", [] as any[]),
     userDataUpdatde: useStorage("userDataUpdatde", {}),
     isUpdateUser: useStorage("isUpdateUser", false),
-    isLogged: false,
+    isLogged: useStorage("isLogged", false),
     localStorageUsers: useLocalStorage("userData", [] as any[]),
     userMock: [
       {
@@ -51,8 +51,6 @@ export const useUserStore = defineStore({
 
   actions: {
     async logout() {
-      useStorage("userData", []);
-
       this.isLogged = false;
     },
 

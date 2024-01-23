@@ -39,20 +39,32 @@ const swal: any = inject("$swal");
 const userName = ref("");
 const password = ref("");
 const router = useRouter();
-user.isLogged = false;
+
+if (user.isLogged) {
+  router.push({ path: "/home" });
+}
+
 const submitLogin = () => {
-  user.login(userName.value, password.value).then((res) => {
-    if (res === false) {
-      swal.fire({
-        title: "Algo deu errado!",
-        icon: "error",
-        text: "Usuário não escontrado!",
-      });
-    } else {
-      //@ts-ignore
-      client.clientData.push(...client.clientMock);
-      router.push({ path: "/home" });
-    }
-  });
+  if (userName.value === "" || password.value === "") {
+    swal.fire({
+      title: "Erro!",
+      icon: "error",
+      text: "Por favor, informe Usuário e Senha!",
+    });
+  } else {
+    user.login(userName.value, password.value).then((res) => {
+      if (res === false) {
+        swal.fire({
+          title: "Algo deu errado!",
+          icon: "error",
+          text: "Usuário não escontrado!",
+        });
+      } else {
+        //@ts-ignore
+        client.clientData.push(...client.clientMock);
+        router.push({ path: "/home" });
+      }
+    });
+  }
 };
 </script>
