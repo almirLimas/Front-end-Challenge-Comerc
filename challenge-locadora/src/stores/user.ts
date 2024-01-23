@@ -5,7 +5,7 @@ export const useUserStore = defineStore({
   id: "user",
 
   state: () => ({
-    userData: useStorage("userData", []),
+    userData: useStorage("userData", [] as any[]),
     userDataUpdatde: useStorage("userDataUpdatde", {}),
     isUpdateUser: useStorage("isUpdateUser", false),
     isLogged: false,
