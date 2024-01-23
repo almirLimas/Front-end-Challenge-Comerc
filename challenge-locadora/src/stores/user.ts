@@ -82,7 +82,7 @@ export const useUserStore = defineStore({
 
       return true;
     },
-    isUpdateUserSet(update: Boolean) {
+    isUpdateUserSet(update: any) {
       this.isUpdateUser = update;
     },
     updateUserSet(user: any) {
