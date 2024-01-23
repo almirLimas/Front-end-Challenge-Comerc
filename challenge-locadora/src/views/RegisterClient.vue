@@ -145,7 +145,7 @@ const step = ref(1);
 const isUpdateClient = ref(false);
 
 const clientData = ref({
-  id: 0,
+  id: Math.random(),
   nome: "",
   sobreNome: "",
   cpf: "",
@@ -192,7 +192,6 @@ const validarEtapaAtual = computed(() => {
 });
 
 const submitForm = () => {
-  clientData.value.id = client.clientData.length++;
   client.createClient(clientData.value).then((res) => {
     if (res) {
       swal

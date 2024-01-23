@@ -66,7 +66,7 @@ const user = useUserStore();
 const swal: any = inject("$swal");
 const isUpdateUser = ref(false);
 const userdata = ref({
-  id: 0,
+  id: Math.random(),
   nome: "",
   documento: "",
   senha: "",
@@ -84,7 +84,6 @@ onMounted(() => {
 });
 
 const submitForm = () => {
-  userdata.value.id = user.userData.length++;
   user.createUser(userdata.value).then((res) => {
     if (res) {
       swal

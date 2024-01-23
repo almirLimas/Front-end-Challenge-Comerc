@@ -58,6 +58,7 @@ const colDefs = ref([
   { field: "id", sortable: true, filter: true, flex: 1 },
   { field: "nome", sortable: true, filter: true, flex: 1 },
   { field: "documento", sortable: true, filter: true, flex: 1 },
+  { field: "status", sortable: true, filter: true, flex: 1 },
 ]);
 
 const cellWasClicked = (event: any) => {

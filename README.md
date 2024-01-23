@@ -34,3 +34,7 @@ npm install
 
 4. inicie os servidor de dev
    npm run serve
+
+   4.para logar utilize as credencias
+   user: admin
+   password: admin

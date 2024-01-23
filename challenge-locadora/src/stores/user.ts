@@ -57,11 +57,11 @@ export const useUserStore = defineStore({
     async login(user: string, password: string) {
       let storedUser = JSON.parse(localStorage.getItem("userData") || "[]");
       let userFound = storedUser.find(function (u: any) {
-        return u.name === user && u.password === password;
+        return u.nome === user && u.senha === password;
       });
 
       if (
-        (userFound && userFound.active === "true") ||
+        (userFound && userFound.status === "ativo") ||
         (user === "admin" && password === "admin")
       ) {
         this.isLogged = true;
@@ -75,7 +75,6 @@ export const useUserStore = defineStore({
     },
 
     async createUser(user: any) {
-      //@ts-ignore
       this.userData.push(user);
 
       return true;
@@ -93,6 +92,7 @@ export const useUserStore = defineStore({
         objectUpdate.nome = user.nome;
         objectUpdate.documento = user.documento;
         objectUpdate.senha = user.senha;
+        objectUpdate.status = user.status;
         this.localStorageUsers = this.userData;
         return true;
       } else {
