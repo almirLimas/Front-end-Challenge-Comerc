@@ -75,7 +75,7 @@ export const useClientStore = defineStore({
         cidade: "São Paulo",
         uf: "SP",
       },
-    ] as [],
+    ] as any[],
   }),
 
   actions: {
