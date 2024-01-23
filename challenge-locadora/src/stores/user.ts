@@ -9,7 +9,7 @@ export const useUserStore = defineStore({
     userDataUpdatde: useStorage("userDataUpdatde", {}),
     isUpdateUser: useStorage("isUpdateUser", false),
     isLogged: false,
-    localStorageUsers: useLocalStorage("userData", []),
+    localStorageUsers: useLocalStorage("userData", [] as any[]),
     userMock: [
       {
         id: 1,

@@ -8,7 +8,7 @@ export const useClientStore = defineStore({
     clientData: useStorage("clientData", [] as any[]),
     clientDataUpdatde: useStorage("clientDataUpdatde", {}),
     isUpdateClient: useStorage("isUpdateClient", false),
-    localStorageClient: useLocalStorage("clientData", []),
+    localStorageClient: useLocalStorage("clientData", [] as any[]),
     clientMock: [
       {
         id: 1,
