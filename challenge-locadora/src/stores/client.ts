@@ -131,12 +131,9 @@ export const useClientStore = defineStore({
       );
 
       if (index !== -1) {
-        // Remover o usuário do array
         this.clientData.splice(index, 1);
 
         this.localStorageClient = this.clientData;
-
-        console.log(this.localStorageClient);
 
         return true;
       } else {

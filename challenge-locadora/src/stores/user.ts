@@ -95,25 +95,18 @@ export const useUserStore = defineStore({
         objectUpdate.nome = user.nome;
         objectUpdate.documento = user.documento;
         objectUpdate.senha = user.senha;
-        // Atualizar dados no localStorage
         this.localStorageUsers = this.userData;
         return true;
       } else {
-        console.error("Objeto não encontrado para editar.");
         return false;
       }
     },
     async deleteUser(userId: number) {
-      // Encontrar o índice do usuário no array
       const index = this.userData.findIndex((user) => user.id === userId);
 
-      console.log(index, "esse é o index");
-
       if (index !== -1) {
-        // Remover o usuário do array
         this.userData.splice(index, 1);
 
-        // Atualizar dados no localStorage
         this.localStorageUsers = this.userData;
         return true;
       } else {

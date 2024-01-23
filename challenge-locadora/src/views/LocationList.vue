@@ -52,8 +52,4 @@
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
 const router = useRouter();
-
-const clicou = (e: any) => {
-  console.log(e);
-};
 </script>

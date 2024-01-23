@@ -61,7 +61,6 @@ const colDefs = ref([
 ]);
 
 const cellWasClicked = (event: any) => {
-  console.log(event.data.id);
   idUser.value = event.data.id;
   disableButton.value = false;
   user.updateUserSet(event.data);
