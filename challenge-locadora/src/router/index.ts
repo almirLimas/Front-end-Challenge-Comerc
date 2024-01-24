@@ -9,7 +9,7 @@ import RegisterUser from "@/views/RegisterUser.vue";
 import RegisterClient from "@/views/RegisterClient.vue";
 import UserList from "@/views/UserList.vue";
 import ClientList from "@/views/ClientList.vue";
-import FilmList from "@/views/FilmList.vue";
+import movieList from "@/views/movieList.vue";
 import LocationList from "@/views/LocationList.vue";
 
 const router = createRouter({
@@ -36,9 +36,9 @@ const router = createRouter({
       component: ClientList,
     },
     {
-      path: "/filmList",
-      name: "FilmList",
-      component: FilmList,
+      path: "/movieList",
+      name: "MovileList",
+      component: movieList,
     },
     {
       path: "/locationList",

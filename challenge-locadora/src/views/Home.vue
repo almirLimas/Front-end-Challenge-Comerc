@@ -15,7 +15,7 @@
         <Card
           :title-card="'Filmes'"
           :icon-card="'fa-solid fa-clapperboard'"
-          @click-card="router.push({ path: '/filmList' })"
+          @click-card="router.push({ path: '/movieList' })"
         />
         <Card
           :title-card="'Locação'"

@@ -1,51 +1,110 @@
 <template>
-  <div class="flex justify-center items-center mt-40">
-    <div class="container bg-white rounded-lg p-2">
-      <div class="container flex justify-end mt-1 mb-1">
-        <button class="p-3 bg-green-400 rounded-lg text-white">
-          <i class="fa-solid fa-user-plus mr-4"></i> Novo usuário
-        </button>
+  <div class="vl-parent">
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="true"
+      :is-full-page="true"
+    />
+  </div>
+  <div class="flex justify-center mt-6">
+    <div class="container bg-white rounded-lg p-10 mt-6">
+      <div
+        class="grid xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 gap-2"
+      >
+        <InputText
+          :label-name="'Filtar por cliente:'"
+          :iput-name="'titleSearch'"
+          v-model:model-value="title"
+        />
+
+        <InputText
+          :label-name="'Filtrar data de locação:'"
+          :iput-name="'dataSearch'"
+          v-model:model-value="year"
+        />
+        <InputText
+          :label-name="'Filtrar data de entrega:'"
+          :iput-name="'dataSearch'"
+          v-model:model-value="year"
+        />
       </div>
-      <table class="table-fixed border-collapse border border-slate-400 w-full">
-        <thead>
-          <tr>
-            <th class="border border-slate-300 h-14">ID</th>
-            <th class="border border-slate-300">Nome</th>
-            <th class="border border-slate-300">Documento</th>
-            <th class="border border-slate-300">Documento</th>
-            <th class="border border-slate-300">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Malcolm Lockyer
-            </td>
-            <td class="border border-slate-300 p-2">Malcolm Lockyer</td>
-            <td class="border border-slate-300 p-2">Malcolm Lockyer</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Witchy Woman
-            </td>
-            <td class="border border-slate-300">The Eagles</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-          <tr>
-            <td class="border border-slate-300 h-9 p-2 text-center">
-              Shining Star
-            </td>
-            <td class="border border-slate-300">Earth, Wind, and Fire</td>
-            <td class="border border-slate-300">1975</td>
-            <td class="border border-slate-300">1972</td>
-            <td class="border border-slate-300">1972</td>
-          </tr>
-        </tbody>
-      </table>
+
+      <div
+        class="grid xl:grid-cols-4 lg:grid-cols-2 sm:grid-cols-1 gap-2 justify-center mt-6"
+      >
+        <CardMovie
+          v-for="result in filteredResults"
+          :key="result.imdbID"
+          :title="result.Title"
+          :year="result.Year"
+          :is-delivered="result.isDelivered"
+          :is-location="result.isLocation"
+          @click-location="location"
+        />
+      </div>
     </div>
   </div>
 </template>
+
+<script lang="ts" setup>
+import { ref, computed, inject } from "vue";
+import InputText from "@/components/InputText.vue";
+import CardMovie from "@/components/CardMovie.vue";
+import { useMovieStore } from "@/stores/movie";
+import { useClientStore } from "@/stores/client";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
+const isLoading = ref(false);
+const title = ref("");
+const year = ref("");
+const dateDelivered = ref("");
+const dateLocation = ref("");
+const clientName = ref("");
+const movieList = useMovieStore();
+const client = useClientStore();
+console.log(movieList.localStorageMoviesLocation);
+isLoading.value = false;
+const swal: any = inject("$swal");
+
+// let tese = client.localStorageClient.map((e) => {
+//   return {
+//     nome: e.nome,
+//   };
+// });
+
+let teste = ["Joao", "Batista"];
+
+const location = () => {
+  swal
+    .fire({
+      title: "Está quase lá!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Pronto",
+      cancelButtonText: "cancelar",
+      text: "Selecione o cliente que deseja alugar!",
+      input: "select",
+      inputOptions: teste,
+    })
+    .then((result: any) => {
+      if (result.isConfirmed) {
+      }
+    });
+};
+const filteredResults = computed(() => {
+  const titleValue = title?.value?.toLowerCase();
+  const yearValue = year?.value;
+  const clientValue = clientName?.value?.toLowerCase();
+  const dateLocationValue = dateLocation?.value;
+  const dateDeliveredValue = dateDelivered?.value;
+
+  return movieList.localStorageMoviesLocation.filter(
+    (item: any) =>
+      item.Title.toLowerCase().includes(titleValue) &&
+      item.Year.includes(yearValue) &&
+      item.dateLocation.includes(dateLocationValue) &&
+      item.dateDelivered.includes(dateDeliveredValue) &&
+      item.client.includes(clientValue)
+  );
+});
+</script>
