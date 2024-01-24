@@ -8,8 +8,7 @@ export const useClientStore = defineStore({
     clientData: useStorage("clientData", [] as any[]),
     clientDataUpdatde: useStorage("clientDataUpdatde", {}),
     isUpdateClient: useStorage("isUpdateClient", false),
-    localStorageClient: useLocalStorage("clientData", [] as any[]),
-    clientMock: [
+    localStorageClient: useLocalStorage("clientData", [
       {
         id: 1,
         nome: "Paulo",
@@ -75,7 +74,7 @@ export const useClientStore = defineStore({
         cidade: "São Paulo",
         uf: "SP",
       },
-    ] as any[],
+    ] as any[]),
   }),
 
   actions: {

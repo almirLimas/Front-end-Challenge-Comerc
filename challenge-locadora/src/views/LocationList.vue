@@ -62,17 +62,15 @@ const dateLocation = ref("");
 const clientName = ref("");
 const movieList = useMovieStore();
 const client = useClientStore();
+const clientInoutOption = ref();
 console.log(movieList.localStorageMoviesLocation);
 isLoading.value = false;
 const swal: any = inject("$swal");
 
-// let tese = client.localStorageClient.map((e) => {
-//   return {
-//     nome: e.nome,
-//   };
-// });
-
-let teste = ["Joao", "Batista"];
+clientInoutOption.value = client.localStorageClient.reduce((acc, item) => {
+  acc[item.id] = item.nome;
+  return acc;
+}, {});
 
 const location = () => {
   swal
@@ -84,7 +82,17 @@ const location = () => {
       cancelButtonText: "cancelar",
       text: "Selecione o cliente que deseja alugar!",
       input: "select",
-      inputOptions: teste,
+      inputOptions: clientInoutOption.value,
+      inputValidator: (value: any) => {
+        console.log(value, "esse é");
+        // return new Promise((resolve) => {
+        //   if (value === "oranges") {
+        //     resolve();
+        //   } else {
+        //     resolve("You need to select oranges :)");
+        //   }
+        // });
+      },
     })
     .then((result: any) => {
       if (result.isConfirmed) {

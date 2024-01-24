@@ -60,8 +60,6 @@ const submitLogin = () => {
           text: "Usuário não escontrado!",
         });
       } else {
-        //@ts-ignore
-        client.clientData.push(...client.clientMock);
         router.push({ path: "/home" });
       }
     });
