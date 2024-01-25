@@ -15,6 +15,7 @@
               :label-name="'Documento'"
               :iput-name="'Documento'"
               v-model:model-value="userdata.documento"
+              :place-holder="'Digite seu documento'"
             />
           </div>
           <div class="mb-4">
@@ -22,6 +23,7 @@
               :label-name="'Senha'"
               :iput-name="'Senha'"
               v-model:model-value="userdata.senha"
+              :place-holder="'Digite sua senha'"
             />
           </div>
           <div class="mb-4">

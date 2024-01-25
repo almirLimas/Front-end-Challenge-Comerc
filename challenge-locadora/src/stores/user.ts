@@ -5,7 +5,43 @@ export const useUserStore = defineStore({
   id: "user",
 
   state: () => ({
-    userData: useStorage("userData", [] as any[]),
+    userData: useStorage("userData", [
+      {
+        id: 1,
+        nome: "Stalone Pereeira",
+        documento: "12345",
+        senha: "123",
+        status: "ativo",
+      },
+      {
+        id: 2,
+        nome: "Ribeiro dos Pinhais",
+        documento: "1234",
+        senha: "123",
+        status: "ativo",
+      },
+      {
+        id: 3,
+        nome: "Lian Silva",
+        documento: "12345",
+        senha: "123",
+        status: "ativo",
+      },
+      {
+        id: 4,
+        nome: "Junio Junior",
+        documento: "12345",
+        senha: "123",
+        status: "ativo",
+      },
+      {
+        id: 5,
+        nome: "Carlos Santos",
+        documento: "12345",
+        senha: "123",
+        status: "desativo",
+      },
+    ] as any[]),
     userDataUpdatde: useStorage("userDataUpdatde", {}),
     isUpdateUser: useStorage("isUpdateUser", false),
     isLogged: useStorage("isLogged", false),

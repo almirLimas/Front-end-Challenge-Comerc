@@ -30,6 +30,7 @@ const props = defineProps({
     required: true,
   },
   valueOptions: {
+    tywe: Array,
     default() {
       return [
         { value: "ativo", name: "Ativo" },

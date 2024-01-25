@@ -12,6 +12,7 @@
       :name="iputName"
       required
       class="w-full p-2 border border-gray-200 rounded-md"
+      :placeholder="placeHolder"
     />
   </div>
 </template>
@@ -23,6 +24,9 @@ const props = defineProps({
   labelName: {
     type: String,
     required: true,
+  },
+  placeHolder: {
+    type: String,
   },
   iputName: {
     type: String,

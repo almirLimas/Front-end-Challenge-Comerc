@@ -1,4 +1,11 @@
 <template>
+  <div class="vl-parent">
+    <loading
+      v-model:active="isLoading"
+      :can-cancel="true"
+      :is-full-page="true"
+    />
+  </div>
   <div class="flex justify-center items-center mt-40">
     <div class="container bg-white rounded-lg p-10">
       <form>
@@ -12,6 +19,7 @@
                 :label-name="'Nome'"
                 :iput-name="'Nome'"
                 v-model:model-value="clientData.nome"
+                :place-holder="'Digite seu nome'"
               />
             </div>
 
@@ -20,6 +28,7 @@
                 :label-name="'Sobrenome'"
                 :iput-name="'SobreNome'"
                 v-model:model-value="clientData.sobreNome"
+                :place-holder="'Digite seu sobrenome'"
               />
             </div>
             <div class="mb-4">
@@ -27,6 +36,7 @@
                 :label-name="'Cpf'"
                 :iput-name="'Cpf'"
                 v-model:model-value="clientData.cpf"
+                :place-holder="'Digite seu cpf'"
               />
             </div>
           </div>
@@ -47,6 +57,7 @@
                 :label-name="'Celular'"
                 :iput-name="'Celular'"
                 v-model:model-value="clientData.celular"
+                :place-holder="'Digite seu celular'"
               />
             </div>
           </div>
@@ -62,6 +73,7 @@
                 v-mask="'####-##'"
                 v-model:model-value="clientData.cep"
                 @blur-event="searchCep"
+                :place-holder="'Digite seu cep'"
               />
             </div>
             <div class="mb-4">
@@ -69,6 +81,7 @@
                 :label-name="'Logradouro'"
                 :iput-name="'Logradouro'"
                 v-model:model-value="clientData.logradouro"
+                :place-holder="'Digite seu logradouro'"
               />
             </div>
             <div class="mb-4">
@@ -76,6 +89,7 @@
                 :label-name="'Bairro'"
                 :iput-name="'Bairro'"
                 v-model:model-value="clientData.bairro"
+                :place-holder="'Digite seu bairro'"
               />
             </div>
             <div class="mb-4">
@@ -83,6 +97,7 @@
                 :label-name="'Cidade'"
                 :iput-name="'Cidade'"
                 v-model:model-value="clientData.cidade"
+                :place-holder="'Digite sua cidade'"
               />
             </div>
             <div class="mb-4">
@@ -90,6 +105,7 @@
                 <SelectComponent
                   :title="'Uf'"
                   v-model:model-value="clientData.uf"
+                  :value-options="state"
                 />
               </div>
             </div>
@@ -140,10 +156,39 @@ import InputEmail from "@/components/InputEmail.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
 import { useClientStore } from "@/stores/client";
 import router from "@/router";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/css/index.css";
 const client = useClientStore();
 const swal: any = inject("$swal");
 const step = ref(1);
 const isUpdateClient = ref(false);
+const isLoading = ref(false);
+const state = ref([
+  { value: "AC", name: "Acre" },
+  { value: "AL", name: "Alagoas" },
+  { value: "AP", name: "Amapá" },
+  { value: "AM", name: "Amazonas" },
+  { value: "BA", name: "Bahia" },
+  { value: "CE", name: "Ceará" },
+  { value: "DF", name: "Distrito Federal" },
+  { value: "ES", name: "Espírito Santo" },
+  { value: "GO", name: "Goías" },
+  { value: "MA", name: "Maranhão" },
+  { value: "MT", name: "Mato Grosso" },
+  { value: "MS", name: "Mato Grosso do Sul" },
+  { value: "PA", name: "Pará" },
+  { value: "PB", name: "Paraíba" },
+  { value: "PR", name: "Paraná" },
+  { value: "PE", name: "Pernambuco" },
+  { value: "PI", name: "Piauí" },
+  { value: "RJ", name: "Rio de Janeiro" },
+  { value: "RS", name: "Rio Grande do Sul" },
+  { value: "RO", name: "Rondônia" },
+  { value: "RR", name: "Roraíma" },
+  { value: "SC", name: "Santa Catarina" },
+  { value: "SE", name: "Sergipe" },
+  { value: "TO", name: "Tocantins" },
+]);
 
 const clientData = ref({
   id: Math.random(),
@@ -225,12 +270,18 @@ const update = () => {
 };
 
 const searchCep = () => {
-  client.searchCep(clientData.value.cep).then((res) => {
-    clientData.value.bairro = res?.data.bairro;
-    clientData.value.cidade = res?.data.localidade;
-    clientData.value.logradouro = res?.data.logradouro;
-    clientData.value.uf = res?.data.uf;
-  });
+  isLoading.value = true;
+  client
+    .searchCep(clientData.value.cep)
+    .then((res) => {
+      clientData.value.bairro = res?.data.bairro;
+      clientData.value.cidade = res?.data.localidade;
+      clientData.value.logradouro = res?.data.logradouro;
+      clientData.value.uf = res?.data.uf;
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const nextStep = () => {

@@ -9,11 +9,14 @@
           :label-name="'Usuário'"
           :iput-name="'userName'"
           v-model:model-value="userName"
+          :place-holder="'Digite seu usuário'"
         />
         <InputPassword
+          class="mt-5"
           :label-name="'Senha'"
           iput-name="'password'"
           v-model:model-value="password"
+          :place-holder="'Digite sua senha'"
         />
         <button
           @click.prevent="submitLogin"

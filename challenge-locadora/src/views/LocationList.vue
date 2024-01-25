@@ -15,17 +15,20 @@
           :label-name="'Filtar por cliente:'"
           :iput-name="'titleSearch'"
           v-model:model-value="clientName"
+          :place-holder="'Pesquise por cliente'"
         />
 
         <InputText
           :label-name="'Filtrar data de locação:'"
           :iput-name="'dataSearch'"
           v-model:model-value="dateLocation"
+          :place-holder="'Pesquise por locação'"
         />
         <InputText
           :label-name="'Filtrar data de entrega:'"
           :iput-name="'dataSearch'"
           v-model:model-value="dateDelivered"
+          :place-holder="'Pesquise pela data de entrega'"
         />
       </div>
 

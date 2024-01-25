@@ -12,6 +12,7 @@
       required
       maxlength="8"
       class="w-full p-2 border border-gray-200 rounded-md"
+      :placeholder="placeHolder"
     />
   </div>
 </template>
@@ -31,6 +32,9 @@ const props = defineProps({
   modelValue: {
     type: String,
     required: true,
+  },
+  placeHolder: {
+    type: String,
   },
 });
 const emit = defineEmits(["update:modelValue"]);
