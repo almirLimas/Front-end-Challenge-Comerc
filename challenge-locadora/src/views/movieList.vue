@@ -15,14 +15,20 @@
           :label-name="'Filtar por titulo:'"
           :iput-name="'titleSearch'"
           v-model:model-value="title"
+          class="mr-0"
         />
+        <button
+          class="bg-blue-500 p-2 m-0 text-white h-10 mt-7 mr-2"
+          @click="searchMovie"
+        >
+          Pesquisar
+        </button>
 
         <InputText
           :label-name="'Filtrar por ano:'"
           :iput-name="'dataSearch'"
           v-model:model-value="year"
         />
-        <button @click="searchMovie">Pesquisar</button>
       </div>
 
       <div
@@ -77,6 +83,14 @@ const searchMovie = () => {
     .listMovies(title.value)
     .then((res) => {
       movies.value = res?.data.Search;
+      if (res?.data.Response) {
+        swal.fire({
+          title: "Erro",
+          icon: "error",
+          text: "Filme não encontrado.",
+          confirmButtonText: "Ok",
+        });
+      }
     })
     .finally(() => {
       isLoading.value = false;
@@ -146,6 +160,6 @@ const location = (
 const filteredResults = computed(() => {
   const yearValue = year?.value;
 
-  return movies.value.filter((item: any) => item.Year.includes(yearValue));
+  return movies.value?.filter((item: any) => item.Year.includes(yearValue));
 });
 </script>
