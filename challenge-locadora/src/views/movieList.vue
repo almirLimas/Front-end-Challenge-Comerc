@@ -141,24 +141,6 @@ const location = (
     });
 };
 
-// const contemId = (array: any, idProcurado: any) => {
-//   console.log(array);
-//   return array.some((item: any) => item.imdbID === idProcurado);
-// };
-
-// const teste = movies.value.forEach((item: any) => {
-//   const estaPresenteNoPrimeiroArray = contemId(movies.value, item.imdbID);
-//   const estaPresenteNoSegundoArray = contemId(
-//     movieList.movieLocation,
-//     item.imdbID
-//   );
-//   if (estaPresenteNoPrimeiroArray && estaPresenteNoSegundoArray) {
-//     console.log(`O ID ${item.imdbID} está presente em ambos os arrays.`);
-//   } else {
-//     console.log(`O ID ${item.imdbID} não está presente em ambos os arrays.`);
-//   }
-// });
-
 const filteredResults = computed(() => {
   const yearValue = year?.value;
 

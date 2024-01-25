@@ -62,6 +62,7 @@ const colDefs = ref([
 ]);
 
 const cellWasClicked = (event: any) => {
+  console.log(event.data);
   idUser.value = event.data.id;
   disableButton.value = false;
   user.updateUserSet(event.data);
@@ -73,6 +74,7 @@ const addNew = () => {
 };
 
 const update = () => {
+  console.log("clicouuu");
   user.isUpdateUserSet(true);
   router.push({ path: "/registerUser" });
 };

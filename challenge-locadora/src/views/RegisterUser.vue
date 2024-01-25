@@ -8,6 +8,7 @@
               :label-name="'Nome'"
               :iput-name="'Nome'"
               v-model:model-value="userdata.nome"
+              :place-holder="'Digite seu nome'"
             />
           </div>
           <div class="mb-4">
@@ -73,6 +74,15 @@ const userdata = ref({
   documento: "",
   senha: "",
   status: "ativo",
+});
+
+onMounted(() => {
+  isUpdateUser.value = JSON.parse(localStorage.getItem("isUpdateUser") || "{}");
+  if (isUpdateUser.value) {
+    userdata.value = JSON.parse(
+      localStorage.getItem("userDataUpdatde") || "{}"
+    );
+  }
 });
 
 const submitForm = () => {
