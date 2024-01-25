@@ -1,6 +1,6 @@
 {
   "files": [],
-  "types": ["vue-sweetalert2"],
+  "types": ["vue-sweetalert2", "jest", "node"],
   "compilerOptions": {
     "noImplicitAny": false,
     "allowJs": true

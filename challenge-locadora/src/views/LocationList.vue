@@ -14,18 +14,18 @@
         <InputText
           :label-name="'Filtar por cliente:'"
           :iput-name="'titleSearch'"
-          v-model:model-value="title"
+          v-model:model-value="clientName"
         />
 
         <InputText
           :label-name="'Filtrar data de locação:'"
           :iput-name="'dataSearch'"
-          v-model:model-value="year"
+          v-model:model-value="dateLocation"
         />
         <InputText
           :label-name="'Filtrar data de entrega:'"
           :iput-name="'dataSearch'"
-          v-model:model-value="year"
+          v-model:model-value="dateDelivered"
         />
       </div>
 
@@ -37,9 +37,11 @@
           :key="result.imdbID"
           :title="result.Title"
           :year="result.Year"
-          :is-delivered="result.isDelivered"
+          :is-delivered="teste"
           :is-location="result.isLocation"
-          @click-location="location"
+          :date-location="result.dateLocation"
+          :date-delivered="result.dateDelivered"
+          :client="result.client"
         />
       </div>
     </div>
@@ -61,44 +63,12 @@ const dateDelivered = ref("");
 const dateLocation = ref("");
 const clientName = ref("");
 const movieList = useMovieStore();
-const client = useClientStore();
-const clientInoutOption = ref();
-console.log(movieList.localStorageMoviesLocation);
-isLoading.value = false;
 const swal: any = inject("$swal");
+const client = useClientStore();
+const teste = ref(false);
 
-clientInoutOption.value = client.localStorageClient.reduce((acc, item) => {
-  acc[item.id] = item.nome;
-  return acc;
-}, {});
+isLoading.value = false;
 
-const location = () => {
-  swal
-    .fire({
-      title: "Está quase lá!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Pronto",
-      cancelButtonText: "cancelar",
-      text: "Selecione o cliente que deseja alugar!",
-      input: "select",
-      inputOptions: clientInoutOption.value,
-      inputValidator: (value: any) => {
-        console.log(value, "esse é");
-        // return new Promise((resolve) => {
-        //   if (value === "oranges") {
-        //     resolve();
-        //   } else {
-        //     resolve("You need to select oranges :)");
-        //   }
-        // });
-      },
-    })
-    .then((result: any) => {
-      if (result.isConfirmed) {
-      }
-    });
-};
 const filteredResults = computed(() => {
   const titleValue = title?.value?.toLowerCase();
   const yearValue = year?.value;

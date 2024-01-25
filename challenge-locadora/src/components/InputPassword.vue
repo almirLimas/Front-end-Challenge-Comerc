@@ -10,6 +10,7 @@
       type="password"
       :name="iputName"
       required
+      maxlength="8"
       class="w-full p-2 border border-gray-200 rounded-md"
     />
   </div>

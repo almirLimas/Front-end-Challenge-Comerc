@@ -73,16 +73,6 @@ const userdata = ref({
   status: "ativo",
 });
 
-onMounted(() => {
-  isUpdateUser.value = JSON.parse(localStorage.getItem("isUpdateUser") || "{}");
-  if (isUpdateUser.value) {
-    userdata.value = JSON.parse(
-      localStorage.getItem("userDataUpdatde") || "{}"
-    );
-  } else {
-  }
-});
-
 const submitForm = () => {
   user.createUser(userdata.value).then((res) => {
     if (res) {

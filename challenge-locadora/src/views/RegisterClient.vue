@@ -59,6 +59,7 @@
               <InputText
                 :label-name="'Cep'"
                 :iput-name="'Cep'"
+                v-mask="'####-##'"
                 v-model:model-value="clientData.cep"
                 @blur-event="searchCep"
               />
