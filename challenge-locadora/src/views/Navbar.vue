@@ -64,8 +64,4 @@ const user = useUserStore();
 const logout = () => {
   user.logout().then((res) => {});
 };
-
-onMounted(() => {
-  window.location.reload();
-});
 </script>
