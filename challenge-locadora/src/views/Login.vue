@@ -63,6 +63,7 @@ const submitLogin = () => {
           text: "Usuário não escontrado!",
         });
       } else {
+        window.location.reload();
         router.push({ path: "/home" });
       }
     });
