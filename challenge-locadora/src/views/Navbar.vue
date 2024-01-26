@@ -57,14 +57,11 @@
 
 <script setup lang="ts">
 import { onMounted } from "vue";
-import { initFlowbite } from "flowbite";
+
 import { useUserStore } from "@/stores/user";
 const user = useUserStore();
 
 const logout = () => {
   user.logout().then((res) => {});
 };
-onMounted(() => {
-  initFlowbite();
-});
 </script>
