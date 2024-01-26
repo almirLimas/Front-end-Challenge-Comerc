@@ -11,7 +11,8 @@
       type="text"
       :name="iputName"
       required
-      class="w-full p-2 border border-gray-200 rounded-md"
+      class="w-full p-2 border border-gray-200"
+      :class="isSearch ? '' : 'rounded-md'"
       :placeholder="placeHolder"
     />
   </div>
@@ -19,6 +20,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+const isSearch = ref(false);
 
 const props = defineProps({
   labelName: {
@@ -31,6 +33,9 @@ const props = defineProps({
   iputName: {
     type: String,
     required: true,
+  },
+  isSearch: {
+    type: Boolean,
   },
   modelValue: {
     type: String,

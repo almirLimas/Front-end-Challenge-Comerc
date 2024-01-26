@@ -1,5 +1,12 @@
 <template>
-  <div class="flex justify-center items-center mt-40">
+  <div class="flex justify-center">
+    <div class="container mt-4 text-cyan-600 font-bold ml-4">
+      <i class="fa-solid fa-users text-2xl"></i>
+      <span class="ml-5">Lista de Usúarios</span>
+    </div>
+  </div>
+
+  <div class="flex justify-center items-center mt-4">
     <div class="container bg-white rounded-lg p-2">
       <div class="container flex justify-end mt-1 mb-1">
         <button
@@ -33,16 +40,18 @@
         @cellClicked="cellWasClicked"
       >
       </ag-grid-vue>
+      <ButtonBack :routerBack="'/home'" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { useRouter } from "vue-router";
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { AgGridVue } from "ag-grid-vue3"; // Vue Grid Logic
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import { AgGridVue } from "ag-grid-vue3";
 import { ref, inject } from "vue";
 import { useUserStore } from "@/stores/user";
+import ButtonBack from "@/components/ButtonBack.vue";
 
 const swal: any = inject("$swal");
 const user = useUserStore();

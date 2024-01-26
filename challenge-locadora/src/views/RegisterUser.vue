@@ -1,5 +1,11 @@
 <template>
-  <div class="flex justify-center items-center mt-40">
+  <div class="flex justify-center">
+    <div class="container mt-4 text-cyan-600 font-bold ml-4">
+      <i class="fa-solid fa-users text-2xl"></i>
+      <span class="ml-5">Cadastro de Usuários</span>
+    </div>
+  </div>
+  <div class="flex justify-center items-center mt-4">
     <div class="container bg-white rounded-lg p-10">
       <form>
         <div class="grid xl:grid-cols-4 lg:grid-cols-2 sm:grid-cols-1 gap-2">
@@ -65,6 +71,7 @@ import InputPassword from "@/components/InputPassword.vue";
 import SelectComponent from "@/components/SelectComponent.vue";
 import { useUserStore } from "@/stores/user";
 import router from "@/router";
+import ButtonBack from "@/components/ButtonBack.vue";
 const user = useUserStore();
 const swal: any = inject("$swal");
 const isUpdateUser = ref(false);
@@ -95,7 +102,9 @@ const submitForm = () => {
           text: "Cadastro realizado com sucesso!",
         })
         .then((result: any) => {
-          clearForm();
+          if (result.isConfirmed) {
+            router.push({ path: "/userList" });
+          }
         });
     }
   });
@@ -134,9 +143,5 @@ const update = () => {
         });
     }
   });
-};
-
-const clearForm = () => {
-  window.location.reload();
 };
 </script>

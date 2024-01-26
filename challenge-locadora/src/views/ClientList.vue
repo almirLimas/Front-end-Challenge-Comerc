@@ -1,5 +1,11 @@
 <template>
-  <div class="flex justify-center items-center mt-40">
+  <div class="flex justify-center">
+    <div class="container mt-4 text-cyan-600 font-bold ml-4">
+      <i class="fa-solid fa-users text-2xl"></i>
+      <span class="ml-5">Lista de Clientes</span>
+    </div>
+  </div>
+  <div class="flex justify-center items-center mt-4">
     <div class="container bg-white rounded-lg p-2">
       <div class="container flex justify-end mt-1 mb-1">
         <button
@@ -34,16 +40,18 @@
         @cellClicked="cellWasClicked"
       >
       </ag-grid-vue>
+      <ButtonBack :routerBack="'/home'" />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import "ag-grid-community/styles/ag-grid.css"; // Core CSS
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
-import { AgGridVue } from "ag-grid-vue3"; // Vue Grid Logic
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import { AgGridVue } from "ag-grid-vue3";
 import { inject, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useClientStore } from "@/stores/client";
+import ButtonBack from "@/components/ButtonBack.vue";
 const swal: any = inject("$swal");
 const client = useClientStore();
 const router = useRouter();
@@ -68,7 +76,6 @@ const rowData = ref([
 
 rowData.value = client.clientData;
 
-// Column Definitions: Defines & controls grid columns.
 const colDefs = ref([
   { field: "id", sortable: true, filter: true },
   { field: "nome", sortable: true, filter: true },
@@ -81,7 +88,6 @@ const colDefs = ref([
   { field: "bairro", sortable: true, filter: true },
   { field: "cidade", sortable: true, filter: true },
   { field: "uf", sortable: true, filter: true },
-  { field: "status", sortable: true, filter: true },
 ]);
 
 const cellWasClicked = (event: any) => {

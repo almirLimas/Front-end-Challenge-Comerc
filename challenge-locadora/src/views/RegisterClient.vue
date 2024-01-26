@@ -6,7 +6,13 @@
       :is-full-page="true"
     />
   </div>
-  <div class="flex justify-center items-center mt-40">
+  <div class="flex justify-center">
+    <div class="container mt-4 text-cyan-600 font-bold ml-4">
+      <i class="fa-solid fa-users text-2xl"></i>
+      <span class="ml-5">Cadastro de Clientes</span>
+    </div>
+  </div>
+  <div class="flex justify-center items-center mt-4">
     <div class="container bg-white rounded-lg p-10">
       <form>
         <div v-if="step === 1">
@@ -70,7 +76,6 @@
               <InputText
                 :label-name="'Cep'"
                 :iput-name="'Cep'"
-                v-mask="'####-##'"
                 v-model:model-value="clientData.cep"
                 @blur-event="searchCep"
                 :place-holder="'Digite seu cep'"
@@ -188,6 +193,7 @@ const state = ref([
   { value: "SC", name: "Santa Catarina" },
   { value: "SE", name: "Sergipe" },
   { value: "TO", name: "Tocantins" },
+  { value: "SP", name: "São Paulo" },
 ]);
 
 const clientData = ref({
@@ -247,7 +253,9 @@ const submitForm = () => {
           text: "Cadastro realizado com sucesso!",
         })
         .then((result: any) => {
-          clearForm();
+          if (result.isConfirmed) {
+            router.push({ path: "/clientList" });
+          }
         });
     }
   });
@@ -292,8 +300,5 @@ const nextStep = () => {
 
 const previousStep = () => {
   step.value--;
-};
-const clearForm = () => {
-  window.location.reload();
 };
 </script>
